@@ -20,11 +20,14 @@ class ProductGrid extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (ctx, index) {
-        return GridTile(
-          child: ProductItem(
-            id: products[index].id,
-            title: products[index].title,
-            imageUrl: products[index].imageUrl,
+        return ChangeNotifierProvider(
+          create: (context) => products[index],
+          child: const GridTile(
+            child: ProductItem(
+                // id: products[index].id,
+                // title: products[index].title,
+                // imageUrl: products[index].imageUrl,
+                ),
           ),
         );
       },
