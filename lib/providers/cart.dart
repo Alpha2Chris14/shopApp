@@ -22,6 +22,7 @@ class Cart extends ChangeNotifier {
   }
 
   int get itemCount {
+    // ignore: unnecessary_null_comparison
     return _items.length;
   }
 
@@ -48,5 +49,6 @@ class Cart extends ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
   }
 }
