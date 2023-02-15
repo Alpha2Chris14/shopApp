@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopapp/widgets/badge.dart';
+import '../providers/cart.dart';
 import '../widgets/product_grid.dart';
 
 class ProductOverviewScreen extends StatelessWidget {
@@ -19,6 +22,17 @@ class ProductOverviewScreen extends StatelessWidget {
               ),
             ],
           ),
+          Consumer<Cart>(
+            builder: (context, cartData, ch) => Badge(
+              value: cartData.itemCount.toString(),
+              color: Colors.red,
+              child: ch as Widget,
+            ),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {},
+            ),
+          )
         ],
       ),
       body: ProductGrid(),
