@@ -15,7 +15,7 @@ class CartItem {
 }
 
 class Cart extends ChangeNotifier {
-  Map<String, CartItem> _items = {};
+  Map<String, CartItem> _items = {}; //instantiate map to empty
 
   Map<String, CartItem> get item {
     return {..._items};
