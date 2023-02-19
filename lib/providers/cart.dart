@@ -15,14 +15,13 @@ class CartItem {
 }
 
 class Cart extends ChangeNotifier {
-  Map<String, CartItem> _items = {}; //instantiate map to empty
+  final Map<String, CartItem> _items = {}; //instantiate map to empty
 
   Map<String, CartItem> get item {
     return {..._items};
   }
 
   int get itemCount {
-    // ignore: unnecessary_null_comparison
     return _items.length;
   }
 
