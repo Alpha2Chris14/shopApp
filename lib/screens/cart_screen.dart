@@ -11,8 +11,6 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
 
-    
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Your Cart"),
@@ -50,7 +48,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
