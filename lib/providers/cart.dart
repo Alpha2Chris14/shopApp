@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CartItem {
   final String id;
@@ -17,7 +17,7 @@ class CartItem {
 class Cart extends ChangeNotifier {
   final Map<String, CartItem> _items = {}; //instantiate map to empty
 
-  Map<String, CartItem> get item {
+  Map<String, CartItem> get items {
     return {..._items};
   }
 
