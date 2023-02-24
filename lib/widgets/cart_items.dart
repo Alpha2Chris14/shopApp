@@ -15,6 +15,7 @@ class CartItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       margin: const EdgeInsets.symmetric(
         horizontal: 15,
         vertical: 4,
@@ -22,10 +23,16 @@ class CartItems extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: ListTile(
-          leading: CircleAvatar(child: Text("\$$price")),
+          leading: CircleAvatar(
+            backgroundColor: Colors.purple,
+            child: Text(
+              "\$$price",
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
           title: Text(title),
           subtitle: Text("Total: \$${(price * quantity)}"),
-          trailing: Text("{$quantity X"),
+          trailing: Text("$quantity X"),
         ),
       ),
     );
