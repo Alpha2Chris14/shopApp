@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/cart.dart';
 
 class CartItems extends StatelessWidget {
   final String id;
+  final String productId;
   final double price;
   final int quantity;
   final String title;
   CartItems({
     required this.id,
+    required this.productId,
     required this.price,
     required this.quantity,
     required this.title,
@@ -15,6 +20,9 @@ class CartItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      onDismissed: (direction) {
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
+      },
       key: ValueKey(id),
       direction: DismissDirection.endToStart,
       background: Container(
