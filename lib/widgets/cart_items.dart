@@ -29,6 +29,28 @@ class CartItems extends StatelessWidget {
           ),
         );
       },
+      confirmDismiss: (_) {
+        return showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                title: Text("Are you sure? "),
+                content: Text("Do you want to delete this item"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop(false);
+                      },
+                      child: const Text("No")),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop(true);
+                      },
+                      child: const Text("Yes"))
+                ],
+              );
+            });
+      },
       key: ValueKey(id),
       direction: DismissDirection.endToStart,
       background: Container(
