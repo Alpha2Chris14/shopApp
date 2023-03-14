@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'product.dart';
 
 class Products with ChangeNotifier {
@@ -34,6 +37,19 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
+    var url = "https://myshopify-c7b40-default-rtdb.firebaseio.com/products";
+    http.post(
+      Uri.parse(url),
+      body: json.encode(
+        {
+          "title": product.title,
+          "description": product.title,
+          "price": product.title,
+          "imageUrl": product.imageUrl,
+          "isFavourite": product.isFavorite,
+        },
+      ),
+    );
     final newProduct = Product(
       id: DateTime.now().toString(),
       title: product.title,
@@ -57,10 +73,10 @@ class Products with ChangeNotifier {
 
   void deleteProduct(String id) {
     _items.removeWhere((product) => product.id == id);
-    notifyListeners(); 
+    notifyListeners();
   }
 
-  Product findById(String id) {
+  Product findById(id) {
     return items.firstWhere((element) => element.id == id);
   }
 }

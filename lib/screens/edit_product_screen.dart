@@ -43,7 +43,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     if (_isInit) {
-      final product_id = ModalRoute.of(context)?.settings.arguments as String;
+      final product_id = ModalRoute.of(context)?.settings.arguments;
       if (product_id == null) {
         return;
       }
@@ -150,7 +150,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onSaved: (value) {
                   _editedProduct = Product(
                     title: _editedProduct.title,
-                    price: value as double,
+                    price: double.parse(value!),
                     description: _editedProduct.description,
                     imageUrl: _editedProduct.imageUrl,
                     id: _editedProduct.id,
@@ -248,11 +248,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             !value.toString().startsWith("https")) {
                           return "Please enter a valid url";
                         }
-                        if (!value.toString().endsWith(".png") ||
-                            !value.toString().endsWith(".jpg") ||
-                            value.toString().endsWith(".jpeg")) {
-                          return "Please enter a valid url";
-                        }
+                        // if (!value.toString().endsWith(".png") ||
+                        //     !value.toString().endsWith(".jpg") ||
+                        //     !value.toString().endsWith(".jpeg")) {
+                        //   return "Please enter a valid url";
+                        // }
                         return null;
                       },
                     ),
