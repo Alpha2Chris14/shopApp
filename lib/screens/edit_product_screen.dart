@@ -88,6 +88,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
     setState(() {});
   }
 
+  // bool isNumeric(String val) {
+  //   if (val == null) {
+  //     return false;
+  //   }
+  //   if (int.parse(val) > 0) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
   void _saveForm() {
     final isValid = _form.currentState?.validate();
     if (!isValid!) {
@@ -96,7 +106,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _form.currentState?.save();
     // ignore: unnecessary_null_comparison
     print(_editedProduct.id);
-    if (_editedProduct != null) {
+    if (_editedProduct.id != null) {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
