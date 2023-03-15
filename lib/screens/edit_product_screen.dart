@@ -94,7 +94,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState?.save();
-    if (_editedProduct.id != null) {
+    // ignore: unnecessary_null_comparison
+    print(_editedProduct.id);
+    if (_editedProduct != null) {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
