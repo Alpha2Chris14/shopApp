@@ -36,9 +36,10 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     var url = "https://myshopify-c7b40-default-rtdb.firebaseio.com/products";
-    http.post(
+    return http
+        .post(
       Uri.parse(url),
       body: json.encode(
         {
@@ -49,16 +50,18 @@ class Products with ChangeNotifier {
           "isFavourite": product.isFavorite,
         },
       ),
-    );
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-    );
-    _items.add(newProduct);
-    notifyListeners();
+    )
+        .then((response) {
+      final newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
+      _items.add(newProduct);
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product newProduct) {
