@@ -37,7 +37,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) {
-    var url = "https://myshopify-c7b40-default-rtdb.firebaseio.com/products";
+    var url =
+        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json";
     return http
         .post(
       Uri.parse(url),
@@ -53,7 +54,8 @@ class Products with ChangeNotifier {
     )
         .then((response) {
       final newProduct = Product(
-        id: DateTime.now().toString(),
+        id: json.decode(response.body)["name"],
+        // id: DateTime.now().toString(),
         title: product.title,
         description: product.description,
         price: product.price,
@@ -61,6 +63,9 @@ class Products with ChangeNotifier {
       );
       _items.add(newProduct);
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 
