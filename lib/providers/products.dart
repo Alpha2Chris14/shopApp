@@ -36,9 +36,9 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     var url = "https://myshopify-c7b40-default-rtdb.firebaseio.com/products";
-    http
+    return http
         .post(
       Uri.parse(url),
       body: json.encode(
