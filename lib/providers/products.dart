@@ -5,35 +5,59 @@ import 'package:http/http.dart' as http;
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final List<Product> _items = [
-    Product(
-      id: "p1",
-      title: "Red Shirt",
-      description: "A Red Shirt",
-      price: 29.99,
-      imageUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzCpMGLxbkmQLdUWbtjmSjysSrrSr2qJJOVw&usqp=CAU",
-    ),
-    Product(
-      id: "p2",
-      title: "Red Dress",
-      description: "A Beautiful Red Dress",
-      price: 29.99,
-      imageUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnHfVoSCwQuNQL8sJD0-p7rrkh8LJNndMvrw&usqp=CAU",
-    ),
-    Product(
-      id: "p3",
-      title: "A Trouser",
-      description: "A Beautiful Dress",
-      price: 30.99,
-      imageUrl:
-          "https://cdn.suitsupply.com/image/upload/f_auto,q_auto,w_1440/suitsupply/campaigns/ss22/guide/trouser-detail-guide/01-D.jpg",
-    ),
+  List<Product> _items = [
+    // Product(
+    //   id: "p1",
+    //   title: "Red Shirt",
+    //   description: "A Red Shirt",
+    //   price: 29.99,
+    //   imageUrl:
+    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzCpMGLxbkmQLdUWbtjmSjysSrrSr2qJJOVw&usqp=CAU",
+    // ),
+    // Product(
+    //   id: "p2",
+    //   title: "Red Dress",
+    //   description: "A Beautiful Red Dress",
+    //   price: 29.99,
+    //   imageUrl:
+    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnHfVoSCwQuNQL8sJD0-p7rrkh8LJNndMvrw&usqp=CAU",
+    // ),
+    // Product(
+    //   id: "p3",
+    //   title: "A Trouser",
+    //   description: "A Beautiful Dress",
+    //   price: 30.99,
+    //   imageUrl:
+    //       "https://cdn.suitsupply.com/image/upload/f_auto,q_auto,w_1440/suitsupply/campaigns/ss22/guide/trouser-detail-guide/01-D.jpg",
+    // ),
   ];
 
   List<Product> get items {
     return [..._items];
+  }
+
+  Future<void> fetchAndSetProduct() async {
+    var url =
+        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json";
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+      );
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+            id: prodId,
+            title: prodData["title"],
+            description: prodData["description"],
+            price: prodData["price"],
+            imageUrl: prodData["imageUrl"]));
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
   }
 
   Future<void> addProduct(Product product) async {
