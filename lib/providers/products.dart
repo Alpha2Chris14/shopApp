@@ -43,14 +43,17 @@ class Products with ChangeNotifier {
       final response = await http.get(
         Uri.parse(url),
       );
+      print(json.decode(response.body));
+      //return;
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      // print("Hello to the world");
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(
             id: prodId,
             title: prodData["title"],
             description: prodData["description"],
-            price: prodData["price"],
+            price: double.parse(prodData["price"]),
             imageUrl: prodData["imageUrl"]));
       });
       _items = loadedProducts;
@@ -69,8 +72,8 @@ class Products with ChangeNotifier {
         body: json.encode(
           {
             "title": product.title,
-            "description": product.title,
-            "price": product.title,
+            "description": product.description,
+            "price": product.price,
             "imageUrl": product.imageUrl,
             "isFavourite": product.isFavorite,
           },
