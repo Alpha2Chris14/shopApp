@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shopapp/models/http_exception.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
@@ -122,12 +123,15 @@ class Products with ChangeNotifier {
     var existingProduct = _items[existingProductIndex];
 
     _items.removeAt(existingProductIndex);
-    http.delete(Uri.parse(url)).then((value) {
-      existingProduct = null as Product;
-    }).catchError((_) {
-      _items.insert(existingProductIndex, existingProduct);
-    });
     notifyListeners();
+    final response = await http.delete(Uri.parse(url));
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+
+      notifyListeners();
+      throw HttpException("Could not delete product");
+    }
+    existingProduct = null as Product;
   }
 
   Product findById(id) {
