@@ -19,6 +19,8 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
     // TODO: implement didChangeDependencies
     if (_isInit) {
       Provider.of<Products>(context).fetchAndSetProduct();
+      print("hello");
+      print(Provider.of<Products>(context).items);
       _isInit = false;
     }
     super.didChangeDependencies();
