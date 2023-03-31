@@ -14,17 +14,26 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _isInit = true;
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     if (_isInit) {
       Provider.of<Products>(context).fetchAndSetProduct();
-      print("hello");
-      print(Provider.of<Products>(context).items);
-      _isInit = false;
     }
+    _isInit = false;
+
     super.didChangeDependencies();
   }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   Future.delayed(Duration.zero).then((_) {
+  //     Provider.of<Products>(context, listen: false).fetchAndSetProduct();
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

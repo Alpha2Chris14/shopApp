@@ -24,6 +24,13 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  Future<void> fetchAndSetOrders() async {
+    const url =
+        "https://myshopify-c7b40-default-rtdb.firebaseio.com/orders.json";
+    final response = await http.get(Uri.parse(url));
+    print(json.decode(response.body));
+  }
+
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     var url = "https://myshopify-c7b40-default-rtdb.firebaseio.com/orders.json";
     final timestamp = DateTime.now();
