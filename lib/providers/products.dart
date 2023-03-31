@@ -38,29 +38,29 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProduct() async {
-    var url =
-        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json";
     try {
-      final response = await http.get(
-        Uri.parse(url),
-      );
-      print(json.decode(response.body));
+      const url =
+          "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json";
+
+      final response = await http.get(Uri.parse(url));
       //return;
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      // print("Hello to the world");
-      final List<Product> loadedProducts = [];
+      List<Product> loadedProducts = [];
+      // print(extractedData);
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(
             id: prodId,
             title: prodData["title"],
             description: prodData["description"],
-            price: double.parse(prodData["price"]),
+            price: prodData["price"],
             imageUrl: prodData["imageUrl"]));
       });
+
+      // print("Hello $loadedProducts");
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
-      // throw error.toString();
+      throw HttpException("swato");
     }
   }
 
