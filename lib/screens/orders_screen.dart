@@ -34,21 +34,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
     super.didChangeDependencies();
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   Future.delayed(Duration.zero).then((_) async {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     await Provider.of<Orders>(context).fetchAndSetOrders();
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //   });
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final orderData = Provider.of<Orders>(context);
