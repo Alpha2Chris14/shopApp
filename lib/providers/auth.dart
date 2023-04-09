@@ -9,11 +9,12 @@ class Auth extends ChangeNotifier {
   // String _token;
   // DateTime _expiryDate;
   // String _userId;
-  final String _api_key = ""; //enter your firebase api key here
+  final String _api_key =
+      "AIzaSyBOCeSkckZZoldHaJMkRXwP0tfrWHy4MI0"; //enter your firebase api key here
 
-  Future<void> signUp(String email, String password) async {
-    final url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$_api_key";
+  Future<void> _authenticated(
+      String email, String password, String urlPath) async {
+    final url = urlPath;
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -27,5 +28,17 @@ class Auth extends ChangeNotifier {
     } catch (error) {
       throw HttpException("An error occured");
     }
+  }
+
+  Future<void> signUp(String email, String password) async {
+    final url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$_api_key";
+    return _authenticated(email, password, url);
+  }
+
+  Future<void> login(String email, String password) async {
+    final url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$_api_key";
+    return _authenticated(email, password, url);
   }
 }
