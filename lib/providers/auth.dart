@@ -13,8 +13,9 @@ class Auth extends ChangeNotifier {
       "AIzaSyBOCeSkckZZoldHaJMkRXwP0tfrWHy4MI0"; //enter your firebase api key here
 
   Future<void> _authenticated(
-      String email, String password, String urlPath) async {
-    final url = urlPath;
+      String email, String password, String urlSegment) async {
+    var url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$_api_key";
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -23,22 +24,22 @@ class Auth extends ChangeNotifier {
             "password": password,
             "returnSecureToken": true,
           }));
-
-      print(response.body);
+      final responseData = json.decode(response.body);
+      print(responseData);
+      if (responseData["error"] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
     } catch (error) {
-      throw HttpException("An error occured");
+      // print("something went wrong....check am out");
+      throw error;
     }
   }
 
   Future<void> signUp(String email, String password) async {
-    final url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$_api_key";
-    return _authenticated(email, password, url);
+    return _authenticated(email, password, 'signUp');
   }
 
   Future<void> login(String email, String password) async {
-    final url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$_api_key";
-    return _authenticated(email, password, url);
+    return _authenticated(email, password, 'signInWithPassword');
   }
 }
