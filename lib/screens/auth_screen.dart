@@ -144,7 +144,8 @@ class _AuthCardState extends State<AuthCard> {
             .signUp(_authData['email']!, _authData['password']!);
       }
     } on HttpException catch (error) {
-      var errorMsg = "Something went wrong try again later";
+      // return error["messa"];
+      var errorMsg = "Something went wrong please try again later";
       if (error.toString().contains("EMAIL_EXISTS")) {
         errorMsg = "email address already exist";
       } else if (error.toString().contains('INVALID_EMAIL')) {
