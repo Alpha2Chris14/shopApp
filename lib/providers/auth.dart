@@ -51,7 +51,7 @@ class Auth extends ChangeNotifier {
       );
       notifyListeners();
     } catch (error) {
-      // print("something went wrong....check am out");
+      print("something went wrong....check am out");
       throw error;
     }
   }
