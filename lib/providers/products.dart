@@ -33,14 +33,16 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  final String _token;
+  Products(this._token);
   List<Product> get items {
     return [..._items];
   }
 
   Future<void> fetchAndSetProduct() async {
     try {
-      const url =
-          "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json";
+      final url =
+          "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json?auth=$_token";
 
       final response = await http.get(Uri.parse(url));
       //return;
@@ -69,7 +71,7 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product product) async {
     var url =
-        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json";
+        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json?auth=$_token";
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -104,7 +106,7 @@ class Products with ChangeNotifier {
     if (prodIndex >= 0) {
       _items[prodIndex] = newProduct;
       final url =
-          "https://myshopify-c7b40-default-rtdb.firebaseio.com/products/$id.json";
+          "https://myshopify-c7b40-default-rtdb.firebaseio.com/products/$id.json?auth=$_token";
       await http.patch(Uri.parse(url),
           body: json.encode({
             "title": newProduct.title,
@@ -121,7 +123,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url =
-        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products/$id.json";
+        "https://myshopify-c7b40-default-rtdb.firebaseio.com/products/$id.json?auth=$_token";
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
 
