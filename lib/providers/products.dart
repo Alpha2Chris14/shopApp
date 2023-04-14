@@ -34,7 +34,8 @@ class Products with ChangeNotifier {
   ];
 
   final String _token;
-  Products(this._token);
+  final String _userId;
+  Products(this._token, this._userId);
   List<Product> get items {
     return [..._items];
   }
@@ -52,13 +53,22 @@ class Products with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      var favUrl =
+          "https://myshopify-c7b40-default-rtdb.firebaseio.com/userFavorites/$_userId.json?auth=$_token";
+      final favoriteResponse = await http.get(Uri.parse(favUrl));
+      final favoriteData = json.decode(favoriteResponse.body);
       extractedData.forEach((prodId, prodData) {
-        loadedProducts.add(Product(
+        loadedProducts.add(
+          Product(
             id: prodId,
             title: prodData["title"],
             description: prodData["description"],
             price: prodData["price"],
-            imageUrl: prodData["imageUrl"]));
+            imageUrl: prodData["imageUrl"],
+            isFavorite:
+                favoriteData == null ? false : favoriteData[prodId] ?? false,
+          ),
+        );
       });
 
       // print("Hello $loadedProducts");
@@ -81,7 +91,7 @@ class Products with ChangeNotifier {
             "description": product.description,
             "price": product.price,
             "imageUrl": product.imageUrl,
-            "isFavourite": product.isFavorite,
+            // "isFavorite": product.isFavorite,
           },
         ),
       );

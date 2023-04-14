@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Product extends ChangeNotifier {
   final String id;
@@ -16,8 +19,28 @@ class Product extends ChangeNotifier {
     this.isFavorite = false,
   });
 
-  void toggleFavoriteStatus() {
+  void _setFavValue(bool newValue) {
+    isFavorite = newValue;
+    notifyListeners();
+  }
+
+  Future<void> toggleFavoriteStatus(String token, String userId) async {
+    final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
+    try {
+      var url =
+          "https://myshopify-c7b40-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$token";
+
+      final response = await http.put(
+        Uri.parse(url),
+        body: json.encode(isFavorite),
+      );
+      if (response.statusCode >= 400) {
+        _setFavValue(oldStatus);
+      }
+    } catch (e) {
+      _setFavValue(oldStatus);
+    }
   }
 }
