@@ -40,10 +40,12 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  Future<void> fetchAndSetProduct() async {
+  Future<void> fetchAndSetProduct([bool filterByUser = false]) async {
+    String filter =
+        filterByUser == true ? 'orderBy="userId"&equalTo="$_userId"' : '';
     try {
       final url =
-          "https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json?auth=$_token";
+          'https://myshopify-c7b40-default-rtdb.firebaseio.com/products.json?auth=$_token&$filter';
 
       final response = await http.get(Uri.parse(url));
       //return;
@@ -91,7 +93,7 @@ class Products with ChangeNotifier {
             "description": product.description,
             "price": product.price,
             "imageUrl": product.imageUrl,
-            // "isFavorite": product.isFavorite,
+            "userId": _userId,
           },
         ),
       );
