@@ -42,12 +42,12 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         title: const Text("myShopify"),
         actions: [
           PopupMenuButton(
-            icon: Icon(Icons.more_vert_outlined),
+            icon: const Icon(Icons.more_vert_outlined),
             itemBuilder: (_) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text("Only Favorites"),
               ),
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text("Show All"),
               ),
             ],
@@ -59,7 +59,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               child: ch as Widget,
             ),
             child: IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart),
               onPressed: () {
                 Navigator.of(context).pushNamed(CartScreen.routeName);
               },
@@ -67,8 +67,8 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
-      drawer: AppDrawer(),
-      body: _isInit ? CircularProgressIndicator() : ProductGrid(),
+      drawer: const AppDrawer(),
+      body: _isInit ? const CircularProgressIndicator() : ProductGrid(),
     );
   }
 }
