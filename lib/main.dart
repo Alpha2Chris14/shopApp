@@ -13,6 +13,7 @@ import 'package:shopapp/screens/product_overview_screen.dart';
 import 'package:shopapp/screens/splash_screen.dart';
 import 'package:shopapp/screens/user_products_screen.dart';
 import './providers/products.dart';
+//blarr
 
 void main() {
   runApp(const MyApp());
